@@ -1,0 +1,16 @@
+---
+namespace: tutorial
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+secretGenerator:
+  - name: mysql-credentials
+    files:
+      - mysql-connection.properties
+
+resources:
+ - mysql.yaml
+ - mysql-service.yaml
+ - db-adminer.yaml
+ - db-adminer-service.yaml

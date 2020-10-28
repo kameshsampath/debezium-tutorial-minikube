@@ -1,0 +1,8 @@
+---
+namespace: tutorial
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+ - my-cluster-kafka.yaml

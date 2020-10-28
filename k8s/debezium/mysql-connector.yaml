@@ -1,0 +1,25 @@
+---
+kind: KafkaConnector
+apiVersion: kafka.strimzi.io/v1alpha1
+metadata:
+  # format dbkind-dbname-connector
+  name: mysql-inventory-connector
+  labels:
+    # must match KafkaConnect cluster name
+    strimzi.io/cluster: my-cluster-debezium
+spec:
+  tasksMax: 1
+  class: io.debezium.connector.mysql.MySqlConnector
+  config:
+    # https://stackoverflow.com/questions/50379839/connection-java-mysql-public-key-retrieval-is-not-allowed
+    database.allowPublicKeyRetrieval: true
+    database.hostname: mysql
+    database.port: "3306"
+    database.user: "${file:/opt/kafka/external-configuration/connector-config/mysql-connection.properties:mysql_username}"
+    database.password: "${file:/opt/kafka/external-configuration/connector-config/mysql-connection.properties:mysql_password}"
+    database.server.id: "184054"
+    database.server.name: minikube
+    database.include.list: inventory
+    database.history.kafka.bootstrap.servers: "my-cluster-kafka-bootstrap:9092"
+    database.history.kafka.topic: schema-changes.inventory
+    include.schema.changes: "true" 
